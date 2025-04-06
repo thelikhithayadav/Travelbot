@@ -1,0 +1,31 @@
+version: "3.1"
+
+language: en
+
+pipeline:
+  - name: WhitespaceTokenizer
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: DIETClassifier
+  - name: EntitySynonymMapper
+  - name: RegexEntityExtractor
+    use_lookup_tables: false
+    use_regexes: true
+    use_word_boundaries: true
+  - name: FallbackClassifier
+    threshold: 0.3
+    ambiguity_threshold: 0.1
+
+
+policies:
+- name: RulePolicy
+  core_fallback_action_name: "action_default_fallback"
+  core_fallback_threshold: 0.3
+  enable_fallback_prediction: true
+  restrict_rules: false
+- name: MemoizationPolicy
+- name: TEDPolicy
+  max_history: 5
+  epochs: 100
+assistant_id: 20250406-000039-bisque-pitch
